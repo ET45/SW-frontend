@@ -2,11 +2,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import CharacterCard from "../CharacterCard";
 
-const CharactersPage = () => {
+const CharactersMovie5 = () => {
   const [characterList, setCharacterList] = useState([]);
   useEffect(() => {
     async function charactersData() {
-      const respond = await axios.get("http://localhost:5000");
+      const respond = await axios.get("http://localhost:5000/film/5");
       console.log("data", respond.data);
       setCharacterList(respond.data);
     }
@@ -32,4 +32,4 @@ const CharactersPage = () => {
   );
 };
 
-export default CharactersPage;
+export default CharactersMovie5;
