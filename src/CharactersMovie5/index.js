@@ -2,8 +2,25 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import CharacterCard from "../CharacterCard";
 
+const compareHeight = (character_a, character_b) => {
+  return character_b.height - character_a.height;
+};
+
+const compareAge = (character_a, character_b) => {
+  return character_b.birth_year - character_a.birth_year;
+};
+
 const CharactersMovie5 = () => {
   const [characterList, setCharacterList] = useState([]);
+  const [sortBy, setSortBy] = useState("height");
+
+  const changeSorting = (event) => {
+    console.log("new sort order:", event.target.value);
+    setSortBy(event.target.value);
+  };
+  const charactersSorted = [...characterList].sort(
+    sortBy === "age" ? compareAge : compareHeight
+  );
   useEffect(() => {
     async function charactersData() {
       const respond = await axios.get("http://localhost:5000/film/5");
@@ -15,11 +32,17 @@ const CharactersMovie5 = () => {
 
   return (
     <div>
-      {!characterList
-        ? "loading"
-        : characterList
-            .sort((a, b) => b.height - a.height)
-            .map((character) => (
+      <p>
+        Sort order:{" "}
+        <select onChange={changeSorting} value={sortBy}>
+          <option value="height">Sort by Height</option>
+          <option value="age">Sort by Age</option>
+        </select>
+      </p>
+      <ul>
+        {!characterList
+          ? "loading"
+          : charactersSorted.map((character) => (
               <CharacterCard
                 name={character.name}
                 gender={character.gender}
@@ -28,6 +51,7 @@ const CharactersMovie5 = () => {
                 birth_year={character.birth_year}
               />
             ))}
+      </ul>
     </div>
   );
 };
