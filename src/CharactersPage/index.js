@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import CharacterCard from "../CharacterCard";
 
 const CharactersPage = () => {
   const [characterList, setCharacterList] = useState([]);
@@ -12,7 +13,21 @@ const CharactersPage = () => {
     charactersData();
   }, []);
 
-  return <div>Works?</div>;
+  return (
+    <div>
+      {!characterList
+        ? "loading"
+        : characterList.map((character) => (
+            <CharacterCard
+              name={character.name}
+              gender={character.gender}
+              hair_color={character.hair_color}
+              height={character.height}
+              birth_year={character.birth_year}
+            />
+          ))}
+    </div>
+  );
 };
 
 export default CharactersPage;
