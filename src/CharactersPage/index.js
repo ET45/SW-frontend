@@ -17,15 +17,17 @@ const CharactersPage = () => {
     <div>
       {!characterList
         ? "loading"
-        : characterList.map((character) => (
-            <CharacterCard
-              name={character.name}
-              gender={character.gender}
-              hair_color={character.hair_color}
-              height={character.height}
-              birth_year={character.birth_year}
-            />
-          ))}
+        : characterList
+            .sort((a, b) => b.height - a.height)
+            .map((character) => (
+              <CharacterCard
+                name={character.name}
+                gender={character.gender}
+                hair_color={character.hair_color}
+                height={character.height}
+                birth_year={character.birth_year}
+              />
+            ))}
     </div>
   );
 };
